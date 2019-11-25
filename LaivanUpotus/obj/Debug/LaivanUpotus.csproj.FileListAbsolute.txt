@@ -1,0 +1,6 @@
+D:\Projeckti\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.csprojAssemblyReference.cache
+D:\Projeckti\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.exe.config
+D:\Projeckti\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.exe
+D:\Projeckti\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.pdb
+D:\Projeckti\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.exe
+D:\Projeckti\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.pdb

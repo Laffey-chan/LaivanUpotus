@@ -8,8 +8,14 @@ namespace LaivanUpotus
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            Menu menu = new Menu();
+            GameHandler game = new GameHandler();
+            new Player().Xp = 5;
+            game.Save();
+            game.Load();
+            Console.ReadKey();
         }
     }
 }
