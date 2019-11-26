@@ -9,7 +9,7 @@ namespace LaivanUpotus
 {
     class GameHandler
     {
-        readonly Player test = new Player();
+        public Player test = new Player();
         public void Save()
         {
             string path = ".\\MyTest.txt";
@@ -34,15 +34,22 @@ namespace LaivanUpotus
         public void Load()
         {
             string path = ".\\MyTest.txt";
+
             try
             {
-                using (StreamReader sr = File.OpenText(path))
+                using (StreamReader fs = new StreamReader(path))
                 {
-                    string s = "";
-                    while ((s = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(s);
-                    }
+                    int.TryParse(fs.ReadLine(), out int x);
+                    int.TryParse(fs.ReadLine(), out int w);
+                    int.TryParse(fs.ReadLine(), out int s);
+                    int.TryParse(fs.ReadLine(), out int si);
+                    int.TryParse(fs.ReadLine(), out int ea);
+                    test.Xp = x;
+                    test.WinLoss = w;
+                    test.Shoot = s;
+                    test.Sink = si;
+                    test.Earnings = ea;
+                    fs.Close();
                 }
             }
 

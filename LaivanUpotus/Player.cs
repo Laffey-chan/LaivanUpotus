@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-            return "xp: " + Xp + " WinLoss: " + WinLoss + " Shoot: " + Shoot + " Sink: " + Sink + " Earnings: " + Earnings;
+            return Xp + "\n" + WinLoss + "\n" + Shoot + "\n" + Sink + "\n" + Earnings;
         }
     }
 }

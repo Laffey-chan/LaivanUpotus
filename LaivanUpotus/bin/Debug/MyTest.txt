@@ -1,1 +1,5 @@
-xp: 0 WinLoss: 0 Shoot: 0 Sink: 0 Earnings: 0
+4
+0
+0
+0
+0

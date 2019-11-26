@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,17 @@ namespace LaivanUpotus
         {
             Menu menu = new Menu();
             GameHandler game = new GameHandler();
-            new Player().Xp = 5;
-            game.Save();
-            game.Load();
+            menu.Start();
+            switch (menu.Value)
+            {
+                case 1:
+                    game.Save();
+                    break;
+                case 2:
+                    game.Load();
+                    break;
+            }
+            Console.WriteLine(game.test.ToString());
             Console.ReadKey();
         }
     }
