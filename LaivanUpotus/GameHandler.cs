@@ -15,13 +15,34 @@ namespace LaivanUpotus
             string path = ".\\MyTest.txt";
             try
             {
-                // Create the file, or overwrite if the file exists.
+
                 using (FileStream fs = File.Create(path))
                 {
                     byte[] info = new UTF8Encoding(true).GetBytes(test.ToString());
-                    // Add some information to the file.
+
                     fs.Write(info, 0, info.Length);
-                    Console.WriteLine("Writen");
+                    Console.WriteLine("Peli tallennettu...");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void NewPlayer(string name)
+        {
+            test.Name = name;
+            string path = ".\\MyTest.txt";
+            try
+            {
+
+                using (FileStream fs = File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString());
+
+                    fs.Write(info, 0, info.Length);
                 }
             }
 
@@ -39,6 +60,7 @@ namespace LaivanUpotus
             {
                 using (StreamReader fs = new StreamReader(path))
                 {
+                    test.Name = fs.ReadLine();
                     int.TryParse(fs.ReadLine(), out int x);
                     int.TryParse(fs.ReadLine(), out int w);
                     int.TryParse(fs.ReadLine(), out int s);

@@ -13,18 +13,61 @@ namespace LaivanUpotus
         {
             Menu menu = new Menu();
             GameHandler game = new GameHandler();
-            menu.Start();
-            switch (menu.Value)
+            switch (menu.Multi(false, "Aloita uusi peli", "Lataa vanha tallennus"))
             {
-                case 1:
-                    game.Save();
+                case 0:
+                    Console.Clear();
+                    Console.WriteLine("Oletko varma että haluat aloittaa uuden");
+                    switch (menu.Multi(false,"kyllä","Ei, jatka vanhaa"))
+                    {
+                        case 0:
+                            Console.Clear();
+                            Console.WriteLine("Pelaajan nimi: ");
+                            game.NewPlayer(Console.ReadLine());
+                            break;
+                        case 1:
+                            game.Load();
+                            break;
+                    }
                     break;
-                case 2:
+                case 1:
                     game.Load();
                     break;
             }
-            Console.WriteLine(game.test.ToString());
-            Console.ReadKey();
+            Peli(menu,game,true);
+
+        }
+
+        static void Peli(Menu menu,GameHandler game,bool inmenu)
+        {
+            while (inmenu)
+            {
+                Console.Clear();
+                switch (menu.Multi(false,"Aloita taistelu","Pelaajan tiedot","Kauppa","Tallenna peli","Poistu ja Tallenna"))
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("Pelaajan nimi: " + game.test.Name + "\n"+"Xp: " + game.test.Xp + "\n"+"WinLoss ration: "+ game.test.WinLoss + "\n"+"Shooted: " + game.test.Shoot + "\n" + "Laivoja upotettu: " + game.test.Sink + "\n" + "Total Earning: " + game.test.Earnings);
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        game.test.Xp += 5;
+                        break;
+                    case 3:
+                        Console.Clear();
+                        game.Save();
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        game.Save();
+                        inmenu = false;
+                        Environment.Exit(0);
+                        break;
+                }
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     internal class Player
     {
+        public string Name { get; set; }
         public int Xp { get; set; }
 
         public int WinLoss { get; set; }
@@ -11,8 +12,9 @@
         public int Sink { get; set; }
 
         public int Earnings { get; set; }
-        public Player(int xp = 0, int winLoss = 0, int shoot = 0, int sink = 0, int earnings = 0)
+        public Player(string name = "Steave", int xp = 0, int winLoss = 0, int shoot = 0, int sink = 0, int earnings = 0)
         {
+            Name = name;
             Xp = xp;
             WinLoss = winLoss;
             Shoot = shoot;
@@ -22,7 +24,7 @@
 
         public override string ToString()
         {
-            return Xp + "\n" + WinLoss + "\n" + Shoot + "\n" + Sink + "\n" + Earnings;
+            return Name + "\n" + Xp + "\n" + WinLoss + "\n" + Shoot + "\n" + Sink + "\n" + Earnings;
         }
     }
 }
