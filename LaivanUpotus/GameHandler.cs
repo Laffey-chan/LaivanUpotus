@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,17 +10,17 @@ namespace LaivanUpotus
 {
     class GameHandler
     {
+        string path = ".\\MyTest.txt";
         public Player test = new Player();
         public void Save()
         {
-            string path = ".\\MyTest.txt";
+            //string path = ".\\MyTest.txt";
             try
             {
 
                 using (FileStream fs = File.Create(path))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString());
-
+                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString() + "\n"+ test.Inv.ToString());
                     fs.Write(info, 0, info.Length);
                     Console.WriteLine("Peli tallennettu...");
                 }
@@ -34,13 +35,13 @@ namespace LaivanUpotus
         public void NewPlayer(string name)
         {
             test.Name = name;
-            string path = ".\\MyTest.txt";
+            //string path = ".\\MyTest.txt";
             try
             {
 
                 using (FileStream fs = File.Create(path))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString());
+                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString() + "\n" + test.Inv.ToString());
 
                     fs.Write(info, 0, info.Length);
                 }
@@ -52,9 +53,20 @@ namespace LaivanUpotus
             }
         }
 
+        public int CheckFile()
+        {
+            int val = 0;
+            if (File.Exists(path))
+            {
+                val++;
+            }
+            return val;
+        }
+        
+
         public void Load()
         {
-            string path = ".\\MyTest.txt";
+            //string path = ".\\MyTest.txt";
 
             try
             {
@@ -66,11 +78,17 @@ namespace LaivanUpotus
                     int.TryParse(fs.ReadLine(), out int s);
                     int.TryParse(fs.ReadLine(), out int si);
                     int.TryParse(fs.ReadLine(), out int ea);
+                    int.TryParse(fs.ReadLine(), out int coi);
+                    int.TryParse(fs.ReadLine(), out int ss);
+                    int.TryParse(fs.ReadLine(), out int a);
                     test.Xp = x;
                     test.WinLoss = w;
                     test.Shoot = s;
                     test.Sink = si;
                     test.Earnings = ea;
+                    test.Coins = coi;
+                    test.Inv.S = ss;
+                    test.Inv.A = a;
                     fs.Close();
                 }
             }

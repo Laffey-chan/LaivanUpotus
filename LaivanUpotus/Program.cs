@@ -16,9 +16,7 @@ namespace LaivanUpotus
             switch (menu.Multi(false, "Aloita uusi peli", "Lataa vanha tallennus"))
             {
                 case 0:
-                    Console.Clear();
-                    Console.WriteLine("Oletko varma että haluat aloittaa uuden");
-                    switch (menu.Multi(false,"kyllä","Ei, jatka vanhaa"))
+                    switch (game.CheckFile())
                     {
                         case 0:
                             Console.Clear();
@@ -26,7 +24,19 @@ namespace LaivanUpotus
                             game.NewPlayer(Console.ReadLine());
                             break;
                         case 1:
-                            game.Load();
+                            Console.Clear();
+                            Console.WriteLine("Oletko varma että haluat aloittaa uuden");
+                            switch (menu.Multi(false, "kyllä", "Ei, jatka vanhaa"))
+                            {
+                                case 0:
+                                    Console.Clear();
+                                    Console.WriteLine("Pelaajan nimi: ");
+                                    game.NewPlayer(Console.ReadLine());
+                                    break;
+                                case 1:
+                                    game.Load();
+                                    break;
+                            }
                             break;
                     }
                     break;
@@ -49,11 +59,12 @@ namespace LaivanUpotus
                         break;
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Pelaajan nimi: " + game.test.Name + "\n"+"Xp: " + game.test.Xp + "\n"+"WinLoss ration: "+ game.test.WinLoss + "\n"+"Shooted: " + game.test.Shoot + "\n" + "Laivoja upotettu: " + game.test.Sink + "\n" + "Total Earning: " + game.test.Earnings);
+                        Console.WriteLine("Tiedot:\nPelaajan nimi: " + game.test.Name + "\nXp: " + game.test.Xp + "\nWinLoss ration: "+ game.test.WinLoss + "\nShooted: " + game.test.Shoot + "\nLaivoja upotettu: " + game.test.Sink + "\nTotal Earning: " + game.test.Earnings +"\nCoins: "+game.test.Coins + "\n\nInventory: " +"\nS: "+ game.test.Inv.S + "\nA: " + game.test.Inv.A);
                         Console.ReadKey();
                         break;
                     case 2:
-                        game.test.Xp += 5;
+                        game.test.Coins += 400;
+                        Shop(menu,game,true);
                         break;
                     case 3:
                         Console.Clear();
@@ -65,6 +76,29 @@ namespace LaivanUpotus
                         game.Save();
                         inmenu = false;
                         Environment.Exit(0);
+                        break;
+                }
+            }
+        }
+
+        static void Shop(Menu menu,GameHandler game,bool inshop)
+        {
+            while (inshop)
+            {
+                switch (menu.Multi(false,"sad","asd","Exit"))
+                {
+                    case 0:
+                        game.test.Inv.S++;
+                        game.test.Coins -= 50;
+                        break;
+                    case 1:
+                        game.test.Inv.A++;
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine(game.test.Inv.ToString());
+                        inshop = false;
+                        Console.ReadKey();
                         break;
                 }
             }
