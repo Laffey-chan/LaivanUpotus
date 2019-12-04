@@ -10,6 +10,8 @@ namespace LaivanUpotus
 {
     class GameHandler
     {
+        List<Ships> ships = new List<Ships>();
+        List<Ships> pcships = new List<Ships>();
         string path = ".\\MyTest.txt";
         public Player test = new Player();
         public void Save()
@@ -20,7 +22,7 @@ namespace LaivanUpotus
 
                 using (FileStream fs = File.Create(path))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString() + "\n"+ test.Inv.ToString());
+                    byte[] info = new UTF8Encoding(true).GetBytes(test.ToString() + "\n" + test.Inv.ToString());
                     fs.Write(info, 0, info.Length);
                     Console.WriteLine("Peli tallennettu...");
                 }
@@ -62,7 +64,7 @@ namespace LaivanUpotus
             }
             return val;
         }
-        
+
 
         public void Load()
         {
@@ -96,6 +98,69 @@ namespace LaivanUpotus
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void Battle()
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                Console.Clear();
+                Console.WriteLine("Anna luku 1-10 välillä" + "\n");
+                Console.WriteLine("Anna x cordinaatti: ");
+                int.TryParse(Console.ReadLine(), out int x);
+                Console.WriteLine("Anna y cordinaatti: ");
+                int.TryParse(Console.ReadLine(), out int y);
+                if ((x < 0 || x >= 10) && (y < 0 || y >= 10))
+                {
+                    if (y < 1 || y >= 10)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Molemmat arvot ovat liian suuria tai liian pieniä");
+                        k--;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("X arvo on liian suuri tai liian pieni");
+                        k--;
+                    }
+                }
+                else
+                {
+                    Ships shipsi = new Ships(x-1, y-1);
+                    ships.Add(shipsi);
+                }
+            }
+            while (true)
+            {
+                Board();
+                Console.ReadKey();
+            }
+        }
+
+        private void Board()
+        {
+            List<int> shipsss = new List<int>();
+            foreach (Ships shipsis in ships)
+            {
+                shipsss.Add(shipsis.Vector.x+shipsis.Vector.y*10);
+            }
+            for (int y =0;y<10;y++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    
+                    if (shipsss.Contains(x+y*10))
+                    {
+                        Console.Write("@ ");
+                    }
+                    else
+                    {
+                        Console.Write("X ");
+                    }
+                }
+                Console.Write("\n");
             }
         }
     }

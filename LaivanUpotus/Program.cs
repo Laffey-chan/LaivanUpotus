@@ -56,6 +56,9 @@ namespace LaivanUpotus
                 switch (menu.Multi(false,"Aloita taistelu","Pelaajan tiedot","Kauppa","Tallenna peli","Poistu ja Tallenna"))
                 {
                     case 0:
+                        inmenu = false;
+                        Console.Clear();
+                        game.Battle();
                         break;
                     case 1:
                         Console.Clear();

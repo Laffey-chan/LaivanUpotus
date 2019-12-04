@@ -44,11 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameHandler.cs" />
+    <Compile Include="IntVector.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="Ships.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
