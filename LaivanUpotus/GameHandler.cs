@@ -103,15 +103,90 @@ namespace LaivanUpotus
 
         public void Battle()
         {
+            ShipsCords();
+            PcShips();
+            while (true)
+            {
+                Board();
+                Console.ReadKey();
+            }
+        }
+
+        private void Board()
+        {
+            Console.Clear();
+            List<int> shipsss = new List<int>();
+            foreach (Ships shipsis in ships)
+            {
+                shipsss.Add(shipsis.Vector.x + shipsis.Vector.y * 10);
+            }
+            for (int y = 0; y < 10; y++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+
+                    if (shipsss.Contains(x + y * 10))
+                    {
+                        Console.Write("@ ");
+                    }
+                    else
+                    {
+                        Console.Write("X ");
+                    }
+                }
+                Console.Write("\n");
+            }
+        }
+
+        private void PcShips()
+        {
+            for (int h = 0; h< 5;h++)
+            {
+                Random rnd = new Random();
+                int x1 = rnd.Next(0, 9), y1= rnd.Next(0, 9);
+                if (ships.Count == 0)
+                {
+                    Console.Clear();
+                    Ships pcShipss = new Ships(x1,y1);
+                    pcships.Add(pcShipss);
+                }
+                else
+                {
+                    int o = 0;
+                    foreach (Ships shp in ships)
+                    {
+                        if (shp.Vector.x + 1 == x1 && shp.Vector.y + 1 == y1)
+                        {
+                            Console.Clear();
+                            h--;
+                            o = 0;
+                            Console.WriteLine("Tämä koordinaatti löytyy jo ");
+                        }
+                        else
+                        {
+                            o++;
+                        }
+                    }
+                    if (o > 0)
+                    {
+                        Console.Clear();
+                        Ships pcShipss = new Ships(x1, y1);
+                        pcships.Add(pcShipss);
+                    }
+                }
+            }
+        }
+
+        private void ShipsCords()
+        {
             for (int k = 0; k < 5; k++)
             {
-                Console.Clear();
                 Console.WriteLine("Anna luku 1-10 välillä" + "\n");
-                Console.WriteLine("Anna x cordinaatti: ");
+                Console.Write("Anna x cordinaatti: ");
                 int.TryParse(Console.ReadLine(), out int x);
-                Console.WriteLine("Anna y cordinaatti: ");
+                Console.Write("\n" + "Anna y cordinaatti: ");
                 int.TryParse(Console.ReadLine(), out int y);
-                if ((x < 0 || x >= 10) && (y < 0 || y >= 10))
+                if ((x < 1 || x >= 10) && (y < 1 || y >= 10))
                 {
                     if (y < 1 || y >= 10)
                     {
@@ -128,39 +203,44 @@ namespace LaivanUpotus
                 }
                 else
                 {
-                    Ships shipsi = new Ships(x-1, y-1);
-                    ships.Add(shipsi);
-                }
-            }
-            while (true)
-            {
-                Board();
-                Console.ReadKey();
-            }
-        }
-
-        private void Board()
-        {
-            List<int> shipsss = new List<int>();
-            foreach (Ships shipsis in ships)
-            {
-                shipsss.Add(shipsis.Vector.x+shipsis.Vector.y*10);
-            }
-            for (int y =0;y<10;y++)
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    
-                    if (shipsss.Contains(x+y*10))
+                    Ships shipsi;
+                    if (ships.Count == 0)
                     {
-                        Console.Write("@ ");
+                        Console.Clear();
+                        shipsi = new Ships(x - 1, y - 1);
+                        ships.Add(shipsi);
                     }
                     else
                     {
-                        Console.Write("X ");
+                        int g = 0;
+                        foreach (Ships shp in ships)
+                        {
+                            if (shp.Vector.x + 1 == x && shp.Vector.y + 1 == y)
+                            {
+                                Console.Clear();
+                                k--;
+                                g = 0;
+                                Console.WriteLine("Tämä koordinaatti löytyy jo ");
+                            }
+                            else
+                            {
+                                g++;
+                            }
+                        }
+                        if (g > 0)
+                        {
+                            Console.Clear();
+                            shipsi = new Ships(x - 1, y - 1);
+                            ships.Add(shipsi);
+                        }
                     }
+
                 }
-                Console.Write("\n");
+
+                if (ships.Count == 5)
+                {
+                    break;
+                }
             }
         }
     }
