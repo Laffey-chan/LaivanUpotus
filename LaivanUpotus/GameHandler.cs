@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -137,6 +138,25 @@ namespace LaivanUpotus
                 Console.Write("\n");
             }
         }
+        public void Shoot()
+        {
+            Console.WriteLine("Anna x koordinaatti ammukselle: ");
+            int.TryParse(Console.ReadLine(), out int xres);
+            Console.WriteLine("Anna y koordinaatti ammukselle: ");
+            int.TryParse(Console.ReadLine(), out int yres);
+            foreach (Ships pship in pcships)
+            {
+                if (pship.Vector.x == xres && pship.Vector.y == yres)
+                {
+                    
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.Write("Huti");
+                }
+            }
+        }
 
         private void PcShips()
         {
@@ -146,7 +166,6 @@ namespace LaivanUpotus
                 int x1 = rnd.Next(0, 9), y1= rnd.Next(0, 9);
                 if (ships.Count == 0)
                 {
-                    Console.Clear();
                     Ships pcShipss = new Ships(x1,y1);
                     pcships.Add(pcShipss);
                 }
@@ -155,12 +174,10 @@ namespace LaivanUpotus
                     int o = 0;
                     foreach (Ships shp in ships)
                     {
-                        if (shp.Vector.x + 1 == x1 && shp.Vector.y + 1 == y1)
+                        if (shp.Vector.x == x1 && shp.Vector.y == y1)
                         {
-                            Console.Clear();
                             h--;
                             o = 0;
-                            Console.WriteLine("Tämä koordinaatti löytyy jo ");
                         }
                         else
                         {
@@ -169,7 +186,6 @@ namespace LaivanUpotus
                     }
                     if (o > 0)
                     {
-                        Console.Clear();
                         Ships pcShipss = new Ships(x1, y1);
                         pcships.Add(pcShipss);
                     }
