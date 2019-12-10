@@ -13,6 +13,7 @@ namespace LaivanUpotus
     {
         List<Ships> ships = new List<Ships>();
         List<Ships> pcships = new List<Ships>();
+        List<Ships> ammuksetpl = new List<Ships>();
         string path = ".\\MyTest.txt";
         public Player test = new Player();
         public void Save()
@@ -109,6 +110,7 @@ namespace LaivanUpotus
             while (true)
             {
                 Board();
+                Shoot();
                 Console.ReadKey();
             }
         }
@@ -116,57 +118,90 @@ namespace LaivanUpotus
         private void Board()
         {
             Console.Clear();
-            List<int> shipsss = new List<int>();
-            foreach (Ships shipsis in ships)
+            IntVector offset = new IntVector(30, 0);
+            for (int y = 0; y < 10; y++)
             {
-                shipsss.Add(shipsis.Vector.x + shipsis.Vector.y * 10);
+                for (int x = 0; x < 10; x++)
+                {
+                    Console.SetCursorPosition(x * 2, y);
+                    Console.Write("X ");
+                }
+            }
+            foreach (Ships player in ships)
+            {
+                Console.SetCursorPosition(player.Vector.x * 2, player.Vector.y);
+                Console.Write("@");
             }
             for (int y = 0; y < 10; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
-
-                    if (shipsss.Contains(x + y * 10))
-                    {
-                        Console.Write("@ ");
-                    }
-                    else
-                    {
-                        Console.Write("X ");
-                    }
+                    Console.SetCursorPosition(offset.x + x * 2, offset.y + y);
+                    Console.Write("X");
                 }
-                Console.Write("\n");
             }
+            foreach (Ships enemy in pcships)
+            {
+                Console.SetCursorPosition(offset.x + enemy.Vector.x * 2, offset.y + enemy.Vector.y);
+                Console.Write("@");
+            }
+
+            foreach (Ships ammukspl in ammuksetpl)
+            {
+                Console.SetCursorPosition(offset.x + ammukspl.Vector.x * 2, offset.y + ammukspl.Vector.y);
+                Console.Write("Q");
+            }
+            Console.SetCursorPosition(0, 11);
         }
         public void Shoot()
         {
-            Console.WriteLine("Anna x koordinaatti ammukselle: ");
+            bool flag = false;
+            Console.WriteLine("Anna x koordinaatti 1-10 väliltä ammukselle: ");
             int.TryParse(Console.ReadLine(), out int xres);
-            Console.WriteLine("Anna y koordinaatti ammukselle: ");
+            Console.WriteLine("Anna y koordinaatti 1-10 väliltä ammukselle: ");
             int.TryParse(Console.ReadLine(), out int yres);
-            foreach (Ships pship in pcships)
+            if ((xres < 1 || xres >= 10) && (yres < 1 || yres >= 10))
             {
-                if (pship.Vector.x == xres && pship.Vector.y == yres)
+                if (yres < 1 || yres >= 10)
                 {
-                    
+                    Console.WriteLine("Molemmat arvot ovat liian suuria tai liian pieniä");
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.Write("Huti");
+                    Console.WriteLine("X arvo on liian suuri tai liian pieni");
                 }
+            }
+            else
+            {
+                foreach (Ships pship in pcships)
+                {
+                    if (pship.Vector.x == xres - 1 && pship.Vector.y == yres - 1)
+                    {
+                        flag = true;
+                    }
+                }
+                if (flag)
+                {
+                    Console.WriteLine("Osuit.");
+                }
+                else
+                {
+                    Console.WriteLine("Ohi.");
+                }
+                Ships ammuks = new Ships(xres - 1, yres - 1);
+                ammuksetpl.Add(ammuks);
             }
         }
 
         private void PcShips()
         {
-            for (int h = 0; h< 5;h++)
+            Random rnd = new Random();
+            for (int h = 0; h < 5; h++)
             {
-                Random rnd = new Random();
-                int x1 = rnd.Next(0, 9), y1= rnd.Next(0, 9);
+                int x1 = rnd.Next(0, 9), y1 = rnd.Next(0, 9);
                 if (ships.Count == 0)
                 {
-                    Ships pcShipss = new Ships(x1,y1);
+                    Ships pcShipss = new Ships(x1, y1);
                     pcships.Add(pcShipss);
                 }
                 else

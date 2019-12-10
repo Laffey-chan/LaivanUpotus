@@ -30,6 +30,10 @@ namespace LaivanUpotus
                 return 1;
             }
         }
+        public static IntVector operator +(IntVector operand1, IntVector operand2)
+        {
+            return new IntVector(operand1.x + operand2.x,operand1.y + operand2.y);
+        }
         public static bool operator ==(IntVector operand1, IntVector operand2)
         {
             return (operand1.x - operand2.x == 0 && operand1.y - operand2.y == 0);
