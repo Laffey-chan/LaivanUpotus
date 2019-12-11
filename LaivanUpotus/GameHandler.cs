@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +15,10 @@ namespace LaivanUpotus
         List<Ships> ships = new List<Ships>();
         List<Ships> pcships = new List<Ships>();
         List<Ships> ammuksetpl = new List<Ships>();
+        List<Ships> ammuksetpc = new List<Ships>();
         string path = ".\\MyTest.txt";
         public Player test = new Player();
+        public bool flag = false, first = false, flag2 = false, syöt = true;
         public void Save()
         {
             //string path = ".\\MyTest.txt";
@@ -111,7 +114,25 @@ namespace LaivanUpotus
             {
                 Board();
                 Shoot();
-                Console.ReadKey();
+                pcshoot();
+                
+            }
+        }
+
+        private void Checkships()
+        {
+            int amount = 0;
+            foreach (Ships shps in ships)
+            {
+                if (shps.Destroy)
+                {
+                    amount++;
+                }
+            }
+
+            if (amount == 5)
+            {
+
             }
         }
 
@@ -132,6 +153,28 @@ namespace LaivanUpotus
                 Console.SetCursorPosition(player.Vector.x * 2, player.Vector.y);
                 Console.Write("@");
             }
+
+            foreach (Ships ammks in ammuksetpc)
+            {
+                bool osuma = false;
+                foreach (Ships playership in ships)
+                {
+                    if (ammks.Vector == playership.Vector)
+                    {
+                        osuma = true;
+                    }
+                }
+                if (osuma)
+                {
+                    Console.SetCursorPosition(ammks.Vector.x * 2, ammks.Vector.y);
+                    Console.Write("1");
+                }
+                else
+                {
+                    Console.SetCursorPosition(ammks.Vector.x * 2, ammks.Vector.y);
+                    Console.Write("M");
+                }
+            }
             for (int y = 0; y < 10; y++)
             {
                 for (int x = 0; x < 10; x++)
@@ -140,57 +183,85 @@ namespace LaivanUpotus
                     Console.Write("X");
                 }
             }
-            foreach (Ships enemy in pcships)
-            {
-                Console.SetCursorPosition(offset.x + enemy.Vector.x * 2, offset.y + enemy.Vector.y);
-                Console.Write("@");
-            }
-
             foreach (Ships ammukspl in ammuksetpl)
             {
-                Console.SetCursorPosition(offset.x + ammukspl.Vector.x * 2, offset.y + ammukspl.Vector.y);
-                Console.Write("Q");
+                bool osuma = false;
+                foreach (Ships enemy in pcships)
+                {
+                    if (ammukspl.Vector == enemy.Vector)
+                    {
+                        osuma = true;
+                    }
+                }
+                if (osuma)
+                {
+                    Console.SetCursorPosition(offset.x + ammukspl.Vector.x * 2, offset.y + ammukspl.Vector.y);
+                    Console.Write("1");
+                }
+                else
+                {
+                    Console.SetCursorPosition(offset.x + ammukspl.Vector.x * 2, offset.y + ammukspl.Vector.y);
+                    Console.Write("M");
+                }
             }
+            Console.SetCursorPosition(0, 10);
+            if (first)
+            {
+                if (flag2)
+                {
+                    Console.WriteLine("Yritit ampua samaan koordinaattiin ");
+                }
+                else
+                {
+                    if (flag)
+                    {
+                        Console.WriteLine("Osuit.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ohi.");
+                    }
+                }
+            }
+            first = true;
             Console.SetCursorPosition(0, 11);
         }
         public void Shoot()
         {
-            bool flag = false;
-            Console.WriteLine("Anna x koordinaatti 1-10 väliltä ammukselle: ");
-            int.TryParse(Console.ReadLine(), out int xres);
-            Console.WriteLine("Anna y koordinaatti 1-10 väliltä ammukselle: ");
-            int.TryParse(Console.ReadLine(), out int yres);
-            if ((xres < 1 || xres >= 10) && (yres < 1 || yres >= 10))
+            IntVector test = new IntVector(0, 06);
+            while (syöt)
             {
-                if (yres < 1 || yres >= 10)
+                Console.WriteLine("Anna x ja y koordinaatti 1-10 välillä: ");
+                test = Asknum(Console.ReadLine(), Console.ReadLine());
+            }
+            syöt = true;
+            foreach (Ships ammukS in ammuksetpl)
+            {
+                if (ammukS.Vector.x == test.x - 1 && ammukS.Vector.y == test.y - 1)
                 {
-                    Console.WriteLine("Molemmat arvot ovat liian suuria tai liian pieniä");
-                }
-                else
-                {
-                    Console.WriteLine("X arvo on liian suuri tai liian pieni");
+                    flag2 = true;
                 }
             }
-            else
+            if (!flag2)
             {
                 foreach (Ships pship in pcships)
                 {
-                    if (pship.Vector.x == xres - 1 && pship.Vector.y == yres - 1)
+                    if (pship.Vector.x == test.x - 1 && pship.Vector.y == test.y - 1)
                     {
                         flag = true;
                     }
                 }
-                if (flag)
-                {
-                    Console.WriteLine("Osuit.");
-                }
-                else
-                {
-                    Console.WriteLine("Ohi.");
-                }
-                Ships ammuks = new Ships(xres - 1, yres - 1);
+                Ships ammuks = new Ships(test.x - 1, test.y - 1);
                 ammuksetpl.Add(ammuks);
             }
+        }
+
+        public void pcshoot()
+        {
+            Random rn = new Random();
+            int x2 = rn.Next(0, 9), y2 = rn.Next(0, 9);
+            Ships ammk = new Ships(x2, y2);
+            ammuksetpc.Add(ammk);
         }
 
         private void PcShips()
@@ -237,7 +308,7 @@ namespace LaivanUpotus
                 int.TryParse(Console.ReadLine(), out int x);
                 Console.Write("\n" + "Anna y cordinaatti: ");
                 int.TryParse(Console.ReadLine(), out int y);
-                if ((x < 1 || x >= 10) && (y < 1 || y >= 10))
+                if ((x < 1 || x >= 10) || (y < 1 || y >= 10))
                 {
                     if (y < 1 || y >= 10)
                     {
@@ -292,6 +363,21 @@ namespace LaivanUpotus
                 {
                     break;
                 }
+            }
+        }
+
+        private IntVector Asknum(string xnum, string ynum)
+        {
+            int.TryParse(xnum, out int xres);
+            int.TryParse(ynum, out int yres);
+            if ((xres >= 1 && xres <= 10) && (yres >= 1 && yres <= 10))
+            {
+                syöt = false;
+                return new IntVector(xres, yres);
+            }
+            else
+            {
+                return new IntVector(0, 0);
             }
         }
     }
