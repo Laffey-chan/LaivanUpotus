@@ -18,7 +18,7 @@ namespace LaivanUpotus
         List<Ships> ammuksetpc = new List<Ships>();
         string path = ".\\MyTest.txt";
         public Player test = new Player();
-        public bool flag = false, first = false, flag2 = false, syöt = true;
+        public bool flag = false, first = false, flag2 = false, syöt = true, battle = true;
         public void Save()
         {
             //string path = ".\\MyTest.txt";
@@ -38,7 +38,6 @@ namespace LaivanUpotus
                 Console.WriteLine(ex.ToString());
             }
         }
-
         public void NewPlayer(string name)
         {
             test.Name = name;
@@ -59,7 +58,6 @@ namespace LaivanUpotus
                 Console.WriteLine(ex.ToString());
             }
         }
-
         public int CheckFile()
         {
             int val = 0;
@@ -69,8 +67,6 @@ namespace LaivanUpotus
             }
             return val;
         }
-
-
         public void Load()
         {
             //string path = ".\\MyTest.txt";
@@ -105,21 +101,42 @@ namespace LaivanUpotus
                 Console.WriteLine(ex.ToString());
             }
         }
-
         public void Battle()
         {
             ShipsCords();
             PcShips();
-            while (true)
+            while (battle)
             {
                 Board();
                 Shoot();
+                Checkships();
                 pcshoot();
-                
+                Checkshipspc();
             }
         }
-
         private void Checkships()
+        {
+            int amount = 0;
+            foreach (Ships shps in pcships)
+            {
+                if (shps.Destroy)
+                {
+                    amount++;
+                }
+            }
+
+            if (amount == 5)
+            {
+                battle = false;
+                AddStats();
+                Console.Clear();
+                Console.WriteLine("Voitit taistelun " + test.Name);
+                Console.WriteLine("Paina mitä tahansa näppäintä jatkaaksesi...");
+                Console.ReadKey();
+            }
+
+        }
+        private void Checkshipspc()
         {
             int amount = 0;
             foreach (Ships shps in ships)
@@ -132,10 +149,13 @@ namespace LaivanUpotus
 
             if (amount == 5)
             {
-
+                battle = false;
+                Console.WriteLine("Tietokone voitti.");
+                test.Shoot += ammuksetpl.Count;
+                Console.WriteLine("Paina mitä tahansa näppäintä jatkaaksesi...");
+                Console.ReadKey();
             }
         }
-
         private void Board()
         {
             Console.Clear();
@@ -183,6 +203,12 @@ namespace LaivanUpotus
                     Console.Write("X");
                 }
             }
+            // debuggin jolla nähdä tietokoneen laivat
+            //foreach (Ships asd in pcships)
+            //{
+            //    Console.SetCursorPosition(offset.x + asd.Vector.x * 2, offset.y + asd.Vector.y);
+            //    Console.Write("@");
+            //}
             foreach (Ships ammukspl in ammuksetpl)
             {
                 bool osuma = false;
@@ -216,6 +242,7 @@ namespace LaivanUpotus
                     if (flag)
                     {
                         Console.WriteLine("Osuit.");
+                        flag = false;
                     }
                     else
                     {
@@ -249,13 +276,13 @@ namespace LaivanUpotus
                     if (pship.Vector.x == test.x - 1 && pship.Vector.y == test.y - 1)
                     {
                         flag = true;
+                        pship.Destroy = true;
                     }
                 }
                 Ships ammuks = new Ships(test.x - 1, test.y - 1);
                 ammuksetpl.Add(ammuks);
             }
         }
-
         public void pcshoot()
         {
             Random rn = new Random();
@@ -263,7 +290,6 @@ namespace LaivanUpotus
             Ships ammk = new Ships(x2, y2);
             ammuksetpc.Add(ammk);
         }
-
         private void PcShips()
         {
             Random rnd = new Random();
@@ -298,7 +324,6 @@ namespace LaivanUpotus
                 }
             }
         }
-
         private void ShipsCords()
         {
             for (int k = 0; k < 5; k++)
@@ -365,7 +390,6 @@ namespace LaivanUpotus
                 }
             }
         }
-
         private IntVector Asknum(string xnum, string ynum)
         {
             int.TryParse(xnum, out int xres);
@@ -379,6 +403,13 @@ namespace LaivanUpotus
             {
                 return new IntVector(0, 0);
             }
+        }
+        private void AddStats()
+        {
+            test.Coins += 25;
+            test.Earnings += 25;
+            test.Xp += 250;
+            test.Shoot += ammuksetpl.Count;
         }
     }
 }

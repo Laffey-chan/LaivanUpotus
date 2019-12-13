@@ -4,3 +4,10 @@ D:\Projeckti\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.exe
 D:\Projeckti\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.pdb
 D:\Projeckti\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.exe
 D:\Projeckti\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.pdb
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.exe.config
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.exe
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\bin\Debug\LaivanUpotus.pdb
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.csprojAssemblyReference.cache
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.csproj.CoreCompileInputs.cache
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.exe
+C:\Users\TheTo\source\repos\LaivanUpotus\LaivanUpotus\obj\Debug\LaivanUpotus.pdb

@@ -59,6 +59,7 @@ namespace LaivanUpotus
                         inmenu = false;
                         Console.Clear();
                         game.Battle();
+                        inmenu = true;
                         break;
                     case 1:
                         Console.Clear();
@@ -86,72 +87,26 @@ namespace LaivanUpotus
 
         static void Shop(Menu menu,GameHandler game,bool inshop)
         {
-            while (inshop)
-            {
-                switch (menu.Multi(false,"sad","asd","Exit"))
-                {
-                    case 0:
-                        game.test.Inv.S++;
-                        game.test.Coins -= 50;
-                        break;
-                    case 1:
-                        game.test.Inv.A++;
-                        break;
-                    case 2:
-                        Console.Clear();
-                        Console.WriteLine(game.test.Inv.ToString());
-                        inshop = false;
-                        Console.ReadKey();
-                        break;
-                }
-            }
+            Console.WriteLine("Kesken...");
+            //while (inshop)
+            //{
+            //    switch (menu.Multi(false,"sad","asd","Exit"))
+            //    {
+            //        case 0:
+            //            game.test.Inv.S++;
+            //            game.test.Coins -= 50;
+            //            break;
+            //        case 1:
+            //            game.test.Inv.A++;
+            //            break;
+            //        case 2:
+            //            Console.Clear();
+            //            Console.WriteLine(game.test.Inv.ToString());
+            //            inshop = false;
+            //            Console.ReadKey();
+            //            break;
+            //    }
+            //}
         }
     }
 }
-
-
-/* todo: Features
- * - Xp ?
- * - Coins ?
- * - Levels ?
- * - Shop/Unlockables ?
- * - Multiplayer ?
- * - Skill Tree ?
- * todo: Menu
- * - Interface
- *      - Save and Load option
- *      - Start game option
- *      - Some kind of options ~Maby~
- *      - Shop ?
- *      - Skill Tree ?
- * - Debug menu
- * todo: Grid
- * - Grid for the ships
- *      - Grid Size: Medium or Big ~Maby~
- * - Xp bar place ?
- * - Coins count place ?
- * todo: Player Stats ?
- * - Wins / Loses
- * - Shot Fires
- * - Total Earning
- * - Total Xp
- * - Total ships sink
- * todo: Skill Tree ?
- * - Radar Shot ?
- * - Fix 1 spot in ship ?
- * - Diffrent Ammunation ?
- * todo: Enemy player
- * - Random Generated shot
- *      - Maby if hitted shoot around that spot ?
- * - Harder Enemies with diffrent ammunations ?
- * todo: Story ?
- * todo: Diffrent Ship to chose ?
- * - Diffrent size ships ?
- * - Special ships ?
- * todo: Save And Load
- * - What file to do ?
- * - is the file readable ?
- * - Maby Database saves ?
- * - Auto Save time ?
- * - Load interface to From Auto save or from File ?
-*/
